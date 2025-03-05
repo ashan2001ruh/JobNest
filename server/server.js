@@ -82,7 +82,7 @@ const routeFiles = fs.readdirSync('./routes');
 
 routeFiles.forEach((file) => {
   //import dynamic routes
-  import('./routes/userRoutes.js')
+  import(`./routes/${file}`)
   .then((route) => {
     app.use("/api/v1/",route.default);
   }).catch((error) => {
