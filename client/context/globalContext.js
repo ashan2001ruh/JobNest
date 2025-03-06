@@ -9,8 +9,7 @@ axios.defaults.withCredentials = true;
 
 export const GlobalContextProvider = ({children}) => {
 
-    const router = useRouter();
-
+ 
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [auth0User, setAuth0User] = useState(null);
     const [userProfile, setUserProfile] = useState({});
@@ -34,12 +33,34 @@ export const GlobalContextProvider = ({children}) => {
     
         checkAuth();
 
-
       }, []);
+
+      const getUserProfile = async (id) => {
+        try {
+          const res = await axios.get(`/api/v1/user/${id}`);
+         
+          setUserProfile(res.data);
+        } catch (error) {
+          console.log("Error getting user profile", error);
+        }
+      };
     
 
+    useEffect(() => {
+     if (isAuthenticated && auth0User) {
+          getUserProfile(auth0User.sub);
+    }
+    }, [isAuthenticated, auth0User]);
+
     return (
-        <GlobalContext.Provider value={"hello from text"}>
+        <GlobalContext.Provider value={{
+            isAuthenticated, 
+            auth0User, 
+            userProfile, 
+            getUserProfile, 
+            loading
+            }}
+        >
             {children}
         </GlobalContext.Provider>
     );

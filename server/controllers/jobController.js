@@ -84,6 +84,7 @@ export const getJobs = asyncHandler(async (req, res) => {
           )
           .sort({ createdAt: -1 }); // sort by latest job
           console.log("Jobs: ", jobs);
+          return res.status(200).json(jobs);
     } catch (error) {
           console.log("Error in getJobs: ", error);
           return res.status(500).json({
