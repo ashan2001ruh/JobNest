@@ -7,7 +7,7 @@ import connect from './db/connect.js';
 import fs from 'fs';
 import User from './models/userModel.js';
 import asyncHandler from "express-async-handler";
-import { profile } from 'console';
+import { log } from 'console';
 dotenv.config();
 
 
