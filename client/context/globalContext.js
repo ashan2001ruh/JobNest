@@ -101,7 +101,13 @@ export const GlobalContextProvider = ({children}) => {
             handleTitleChange,
             handleDescriptionChange,
             handleSalaryChange,
-            setActiveEmploymentTypes
+            setActiveEmploymentTypes,
+            setJobDescription,
+            setSalaryType,
+            setNegotiable,
+            setTags,
+            setSkills,
+            setLocation,
             }}
         >
             {children}

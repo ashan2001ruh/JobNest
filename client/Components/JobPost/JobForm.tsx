@@ -5,6 +5,7 @@ import JobTitle from "./JobTitle";
 import JobDetails from "./JobDetails";
 import JobSkills from "./JobSkills";
 import JobLocation from "./JobLocation";
+import { useJobsContext } from "@/context/jobsContext";
 
 
 function JobForm() {
@@ -20,6 +21,8 @@ function JobForm() {
     tags,
     
   } = useGlobalContext();
+
+  const { createJob } = useJobsContext();
 
 
   const sections = ["About", "Job Details", "Skills", "Location", "Summary"];
@@ -64,7 +67,21 @@ function JobForm() {
     }
   };
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    createJob({
+      title: jobTitle,
+      description: jobDescription,
+      salaryType,
+      jobType: activeEmploymentTypes,
+      salary,
+      location: `${location.address}, ${location.city}, ${location.country}`,
+      skills,
+      negotiable,
+      tags,
+    });
 
+  };
   
   
   return (
@@ -97,10 +114,15 @@ function JobForm() {
         ))}
       </div>
 
-      <form action="" className="p-6 flex-1 bg-white rounded-lg self-start">
+      <form action="" 
+      className="p-6 flex-1 bg-white rounded-lg self-start"
+      onSubmit={handleSubmit}
+      >
         {renderStages()}
 
-        <div className="flex justify-end gap-4 mt-4">
+        <div className="flex justify-end gap-4 mt-4"
+        
+        >
           {currentSection !== "Summary" && 
           <button 
             type="button" 
