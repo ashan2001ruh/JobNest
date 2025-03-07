@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { usePathname } from "next/navigation";
+import Profile from "./Profile";
 
 function Header() {
     const { isAuthenticated } = useGlobalContext();
@@ -53,7 +54,7 @@ function Header() {
 
       <div className="flex items-center gap-4">
         {isAuthenticated ? (
-          <div>Profile</div>
+          <Profile />
         ) : (
           <div className="flex items-center gap-6">
             <Link
