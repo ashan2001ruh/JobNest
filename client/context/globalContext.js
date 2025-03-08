@@ -15,6 +15,21 @@ export const GlobalContextProvider = ({children}) => {
     const [userProfile, setUserProfile] = useState({});
     const [loading, setLoading] = useState(false);
 
+      // input state
+    const [jobTitle, setJobTitle] = useState("");
+    const [jobDescription, setJobDescription] = useState("");
+    const [salary, setSalary] = useState(0);
+    const [activeEmploymentTypes, setActiveEmploymentTypes] = useState([]);
+    const [salaryType, setSalaryType] = useState("Year");
+    const [negotiable, setNegotiable] = useState(false);
+    const [tags, setTags] = useState([]);
+    const [skills, setSkills] = useState([]);
+    const [location, setLocation] = useState({
+      country: "",
+      city: "",
+      address: "",
+    });
+
     useEffect(() => {
         const checkAuth = async () => {
           setLoading(true);
@@ -44,6 +59,21 @@ export const GlobalContextProvider = ({children}) => {
           console.log("Error getting user profile", error);
         }
       };
+
+      //handling input change
+
+      const handleTitleChange = (e) => {
+        setJobTitle(e.target.value.trimStart());
+      };
+    
+      const handleDescriptionChange = (e) => {
+        setJobDescription(e.target.value.trimStart());
+      };
+    
+      const handleSalaryChange = (e) => {
+        setSalary(e.target.value);
+      };
+
     
 
     useEffect(() => {
@@ -58,7 +88,26 @@ export const GlobalContextProvider = ({children}) => {
             auth0User, 
             userProfile, 
             getUserProfile, 
-            loading
+            loading,
+            jobTitle,
+            jobDescription,
+            salary,
+            activeEmploymentTypes,
+            salaryType,
+            negotiable,
+            tags,
+            skills,
+            location,
+            handleTitleChange,
+            handleDescriptionChange,
+            handleSalaryChange,
+            setActiveEmploymentTypes,
+            setJobDescription,
+            setSalaryType,
+            setNegotiable,
+            setTags,
+            setSkills,
+            setLocation,
             }}
         >
             {children}
