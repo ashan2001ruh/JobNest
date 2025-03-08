@@ -74,7 +74,7 @@ function MyJob({ job }: JobProps) {
               : router.push("https://jobfindr-q1cl.onrender.com/login");
           }}
         >
-          {isLiked ? bookmark : bookmarkEmpty}
+          
         </button>
       </div>
       <div>

@@ -6,7 +6,7 @@ import { Job } from '@/types/type';
 import { bookmark, bookmarkEmpty } from '@/utils/Icons';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Separator } from '../ui/separator';
 import formatMoney from '@/utils/formatMoney';
 import { Bookmark, Calendar } from 'lucide-react';
@@ -44,6 +44,10 @@ function JobCard({ job, activeJob }: JobProps)  {
     setIsLiked((prev) => !prev);
     likeJob(id);
   };
+
+  useEffect(() => {
+    setIsLiked(job.likes.includes(userProfile._id));
+  }, [job.likes, userProfile._id]);
 
     const companyDescription = "JobNest is a platform that connects job seekers with employers...";
 
@@ -108,7 +112,7 @@ function JobCard({ job, activeJob }: JobProps)  {
                           : router.push("http://localhost:8000/login");
                       }}
             >
-                {isLiked ? <Bookmark size={24} /> : <Bookmark size={24} /> }
+                {isLiked ?     bookmark : bookmarkEmpty  }
 
 
             </button>

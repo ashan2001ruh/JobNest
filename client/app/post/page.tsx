@@ -1,9 +1,20 @@
-
-import React from 'react'
+"use client"
+import React, { useEffect } from 'react'
 import Header from '@/Components/Header'
 import JobForm from '@/Components/JobPost/JobForm'
+import { useGlobalContext } from '@/context/globalContext';
+import { useRouter } from 'next/navigation';
 
 function page() {
+  const { isAuthenticated, loading } = useGlobalContext();
+  const router = useRouter();
+
+
+    useEffect(() => {
+      if (!loading && !isAuthenticated) {
+        router.push("http://localhost:8000/login");
+      }
+    }, [isAuthenticated]);
 
       return <div className="flex flex-col">
         <Header />

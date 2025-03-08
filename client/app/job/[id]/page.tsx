@@ -105,7 +105,7 @@ function page() {
                     : router.push("http://localhost:8000/login");
                 }}
               >
-                {isLiked ? <Bookmark size={24} /> : <Bookmark size={24} /> }
+                {isLiked ?  bookmark : bookmarkEmpty }
               </button>
             </div>
 
