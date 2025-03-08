@@ -116,8 +116,12 @@ export const JobsContextProvider = ({ children }) => {
 
      // apply to a job
     const applyToJob = async (jobId) => {
+      const job = jobs.find(job => job._id === jobId);
 
-
+        if(job && job.applicants.includes(userProfile._id)){
+          toast.error("You have already applied to this job");
+          return;
+        }
         try {
         const res = axios.put(`/api/v1/jobs/apply/${jobId}`);
 
