@@ -12,13 +12,33 @@ axios.defaults.withCredentials = true;
 
 
 export const JobsContextProvider = ({ children }) => {
-    const { userProfile} = useGlobalContext();
+    const { userProfile, getUserProfile} = useGlobalContext();
 
     const [jobs, setJobs] = useState([]);
     const [loading, setLoading] = useState(false);
     const [userJobs, setUserJobs] = useState([]);
 
+    const [searchQuery, setSearchQuery] = useState({
+      tags: "",
+      location: "",
+      title: "",
+    });
 
+      //filters
+    const [filters, setFilters] = useState({
+      fullTime: false,
+      partTime: false,
+      internship: false,
+      contract: false,
+      fullStack: false,
+      backend: false,
+      devOps: false,
+      uiUx: false,
+     });
+
+
+  const [minSalary, setMinSalary] = useState(30000);
+  const [maxSalary, setMaxSalary] = useState(120000);
     const getJobs = async () => {
         setLoading(true);
         try {
@@ -107,6 +127,7 @@ export const JobsContextProvider = ({ children }) => {
         console.log("Job liked", jobId);
         try {
         const res = await axios.put(`/api/v1/jobs/like/${jobId}`);
+        console.log("Job liked successfully", res);
         toast.success("Job liked successfully");
         getJobs();
         } catch (error) {
@@ -123,7 +144,7 @@ export const JobsContextProvider = ({ children }) => {
           return;
         }
         try {
-        const res = axios.put(`/api/v1/jobs/apply/${jobId}`);
+        const res = await axios.put(`/api/v1/jobs/apply/${jobId}`);
 
         toast.success("Applied to job successfully");
         getJobs();
@@ -146,8 +167,16 @@ export const JobsContextProvider = ({ children }) => {
     }
   };
 
+  
 
+  const handleSearchChange = (searchName, value) => {
+    setSearchQuery((prev) => ({ ...prev, [searchName]: value }));
+  };
     
+
+  const handleFilterChange = (filterName) => {
+    setFilters((prev) => ({ ...prev, [filterName]: !prev[filterName] }));
+  };
 
     useEffect(() => {
         getJobs();
@@ -163,15 +192,26 @@ export const JobsContextProvider = ({ children }) => {
 
     return (
         <JobsContext.Provider value={{
-            jobs,
-            loading,
-            createJob,
-            userJobs,
-            searchJobs,
-            getJobById,
-            likeJob,
-            applyToJob,
-            deleteJob
+          jobs,
+          loading,
+          createJob,
+          userJobs,
+          searchJobs,
+          getJobById,
+          likeJob,
+          applyToJob,
+          deleteJob,
+          handleSearchChange,
+          searchQuery,
+          setSearchQuery,
+          handleFilterChange,
+          filters,
+          minSalary,
+          setMinSalary,
+          maxSalary,
+          setMaxSalary,
+          setFilters,
+
         }}>
             {children}
         </JobsContext.Provider>

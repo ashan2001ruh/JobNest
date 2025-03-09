@@ -1,5 +1,5 @@
 "use client";
-import React from 'react'
+import React, { useEffect } from 'react'
 import Header from '@/Components/Header'
 import { useGlobalContext } from "@/context/globalContext";
 import { useJobsContext } from "@/context/jobsContext";
@@ -15,7 +15,13 @@ function page() {
   const userId = userProfile?._id;
   const router = useRouter();
   
-  //Redirect to login if user is not authenticated
+  useEffect(() => {
+    if (!loading && !isAuthenticated) {
+      router.push("http://localhost:8000/login");
+    }
+  }, [isAuthenticated]);
+
+
   const likedJobs = jobs.filter((job: Job) => {
     return job.applicants.includes(userId);
   });

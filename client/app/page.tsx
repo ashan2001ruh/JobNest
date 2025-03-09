@@ -75,7 +75,8 @@ export default function Home() {
               placeholder="Job title or keyword"
               className="flex-grow bg-white text-black"
             />
-            <Button className="bg-[#7263f3] text-white">
+            <Button 
+              className="bg-[#7263f3] text-white">
               <SearchIcon className="w-6 h-6" />
               Search Jobs
             </Button>
